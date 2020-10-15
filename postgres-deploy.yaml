@@ -20,10 +20,16 @@ spec:
           env:
             - 
               name: POSTGRES_USER
-              value: postgres
+              valueFrom:
+                secretKeyRef:
+                  key: user
+                  name: postgres
             - 
               name: POSTGRES_PASSWORD
-              value: postgres
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: postgres
           image: postgres:9.4
           name: postgres
           ports:
