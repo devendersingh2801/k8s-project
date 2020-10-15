@@ -31,8 +31,5 @@ spec:
               containerPort: 5432
           volumeMounts:
             - 
-              mountPath: /var/lib/mysql
-              name: mysql-vol
-            - 
-              mountPath: /docker-entrypoint-initdb.d
-              name: mysql-init-vol
+              mountPath: /var/lib/postgresql/data
+              name: postgres
