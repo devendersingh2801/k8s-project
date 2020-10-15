@@ -6,8 +6,5 @@ spec:
   ports: 
     -
       port: 80
-      nodePort: 32000
   selector:
-    app: result
-  type: NodePort
-    
+    app: result    
