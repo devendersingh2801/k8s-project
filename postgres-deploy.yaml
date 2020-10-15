@@ -14,7 +14,8 @@ spec:
       volumes:
         - 
           name: postgres
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: postgres-pvc
       containers:
         - 
           env:
