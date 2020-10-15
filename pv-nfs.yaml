@@ -3,6 +3,8 @@ kind: PersistentVolume
 metadata:
   name: nfs
 spec:
+  accessModes: 
+    - ReadWriteOnce
   capacity:
     storage: 100Mi
   nfs: 
