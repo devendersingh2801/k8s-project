@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      volumes:
+        - 
+          name: postgres
+          persistentVolumeClaim:
+            claimName: pvc
+        - 
+          configMap:
+            name: mysql-init
+          name: mysql-init-vol
+      containers:
+        - 
+          args:
+            - $(MYSQL_ARG_1)
+            - $(MYSQL_ARG_2)
+            - $(MYSQL_ARG_3)
+            - $(MYSQL_ARG_4)
+          env:
+            - 
+              name: MYSQL_ARG_1
+              valueFrom:
+                configMapKeyRef:
+                  key: args-1
+                  name: mysql-args
+            - 
+              name: MYSQL_ARG_2
+              valueFrom:
+                configMapKeyRef:
+                  key: args-2
+                  name: mysql-args
+            - 
+              name: MYSQL_ARG_3
+              valueFrom:
+                configMapKeyRef:
+                  key: args-3
+                  name: mysql-args
+            - 
+              name: MYSQL_ARG_4
+              valueFrom:
+                configMapKeyRef:
+                  key: args-4
+                  name: mysql-args
+            - 
+              name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: MYSQL_DATABASE
+                  name: mysql
+            - 
+              name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: MYSQL_PASSWORD
+                  name: mysql
+            - 
+              name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: MYSQL_ROOT_PASSWORD
+                  name: mysql
+            - 
+              name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  key: MYSQL_USER
+                  name: mysql
+          image: 'mysql:5.7'
+          name: mysql-db-instance
+          ports:
+            - 
+              containerPort: 3306
+              protocol: TCP
+          volumeMounts:
+            - 
+              mountPath: /var/lib/mysql
+              name: mysql-vol
+            - 
+              mountPath: /docker-entrypoint-initdb.d
+              name: mysql-init-vol
